@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Emiaostein‘s Blog]]></title>
+  <link href="http://cszwdy.github.io/atom.xml" rel="self"/>
+  <link href="http://cszwdy.github.io/"/>
+  <updated>2014-11-11T11:16:53+08:00</updated>
+  <id>http://cszwdy.github.io/</id>
+  <author>
+    <name><![CDATA[Emiaostein]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[排版设计的基础知识（一）]]></title>
+    <link href="http://cszwdy.github.io/blog/2013/11/11/typographical-concepts/"/>
+    <updated>2013-11-11T10:23:58+08:00</updated>
+    <id>http://cszwdy.github.io/blog/2013/11/11/typographical-concepts</id>
+    <content type="html"><![CDATA[<p><img src="http://lucaslew.com/images/hobonichi.jpg" alt="Glyphs of the character A" /></p>
+
+<h2>1. 字符（Characters） 与 字体（Glyph）</h2>
+
+<p>这是我的<code>第一篇博客</code>，谢谢访问。</p>
+
+<h3>Characters</h3>
+
+<blockquote><p>A <code>字符</code> is the smallest unit of written language that carries meaning .</p></blockquote>
+
+<h3>Glyph</h3>
+
+<blockquote><p>Any one of these various concrete forms of a <strong>character</strong> is called a <code>Glyph</code> .</p></blockquote>
+
+<h3>Ligatures</h3>
+
+<blockquote><p>In some case a character may be represented by multiple glyphs. In other cases, a single glyph may represnet multiple charaters,as in the case of a <code>ligature</code>, or joined letter.</p></blockquote>
+
+<h2>2. Typefaces and Fonts</h2>
+
+<h3>Typeface</h3>
+
+<blockquote><p>A <code>typeface</code>(also known as font family) is a set of visually related shapes for some or all of the characters in a written language.</p>
+
+<p>from Wikipedia:
+a typeface (also known as font family) is a set of one or more fonts each composed of glyphs that share common design features. Each font of a typeface has a specific weight, style, condensation, width, slant, italicization, ornamentation, and designer or foundry (and formerly size, in metal fonts).</p>
+
+<p>A <code>typestyle</code>, or simply style(also called traits), is a distinguishing visual characteristic of a typeface, such as,  such as bold, italic, condensed, expanded, narrow, small caps, poster fonts, and fixed pitch.</p></blockquote>
+
+<h3>字体和字体簇</h3>
+
+<blockquote><p>A <code>font</code> is a series of glyphs depicting the characters in a consistent size, typeface, and typestyle.
+A <code>font family</code> (also known as Typeface) is a group of fonts that share a typeface but differ in typestyle.</p></blockquote>
+
+<h2>3. Text Layout</h2>
+
+<blockquote><p>Text <code>layout</code> is the process of arranging glyphs on a display device, in an area called a text view , which represents an area similar to a page in traditional typesetting.</p>
+
+<p>The order in which glyphs are laid out relative to each other is called text <code>direction</code>.</p>
+
+<p>To create lines from a string of glyphs, the layout engine must perform <code>line breaking</code> by finding a point at which to end one line and begin the next.</p>
+
+<p>The layout manager lays out glyphs along an invisible line called the <code>baseline</code>.</p></blockquote>
+
+<h2>4. Tips</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Characters and glyphs do not have one-to-one correspondence;
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[我是爱喵斯坦，欢迎访问我的博客！]]></title>
+    <link href="http://cszwdy.github.io/blog/2013/10/09/huan-ying-fang-wen-wo-de-ji-zhu-bo-ke/"/>
+    <updated>2013-10-09T11:03:41+08:00</updated>
+    <id>http://cszwdy.github.io/blog/2013/10/09/huan-ying-fang-wen-wo-de-ji-zhu-bo-ke</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>
