@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ios | Emiaostein‘s Blog]]></title>
   <link href="http://cszwdy.github.io/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://cszwdy.github.io/"/>
-  <updated>2014-11-11T17:43:44+08:00</updated>
+  <updated>2014-11-12T22:49:46+08:00</updated>
   <id>http://cszwdy.github.io/</id>
   <author>
     <name><![CDATA[Emiaostein]]></name>
@@ -20,86 +20,202 @@
     <id>http://cszwdy.github.io/blog/2013/11/11/typographical-concepts</id>
     <content type="html"><![CDATA[<p><img src="http://imageblogemiaostein.qiniudn.com/Emiaostein_Blog_paibanshejiyi_Cover.png" alt="Cover" /></p>
 
-<p>本章介绍了与文字排版相关的一些概念，有助于对文字系统 API 的理解。<!--more--></p>
+<p>关于文字的知识繁杂庞大，本篇介绍了文字系统API中经常出现且重要的概念，对深入理解和使用文字系统，例如coreText、textKit，有所帮助。希望各位同学喜爱。: ]</p>
 
 <p><strong>目录</strong></p>
 
 <ul id="markdown-toc">
-  <li><a href="#characters-glyph">字符（Characters）与 字体（Glyph）</a></li>
-  <li><a href="#import-foundationh">import “Foundation.h”</a>    <ul>
-      <li><a href="#typefaces-fonts">字体（Typefaces）与 字型（Fonts）</a>        <ul>
-          <li><a href="#typeface">Typeface</a></li>
-          <li><a href="#section">字体和字体簇</a></li>
-        </ul>
-      </li>
-      <li><a href="#text-layout">3. Text Layout</a></li>
-      <li><a href="#tips">4. Tips</a></li>
-    </ul>
-  </li>
+  <li><a href="#section">字符、字形、字型与字体</a></li>
+  <li><a href="#section-1">文本的布局</a></li>
+  <li><a href="#section-2">字形视觉间距调整和合字</a></li>
+  <li><a href="#section-3">文本的对齐方式</a></li>
+  <li><a href="#section-4">总结</a></li>
+  <li><a href="#section-5">附录：术语速查</a></li>
 </ul>
 
-<h2 id="characters-glyph">字符（Characters）与 字体（Glyph）</h2>
+<!--more-->
 
-<p><strong><code>字符</code></strong> 是书面语言中的最小单位。</p>
+<h2 id="section">字符、字形、字型与字体</h2>
 
-<p>&#8220;`ObjC</p>
+<p>字符（character）是一个抽象概念。</p>
 
-<h1 id="import-foundationh">import “Foundation.h”</h1>
+<p>字形（glyph）是具体字符的特殊图形表现（某个字的形体（写法））。</p>
+
+<p>字体（typeface）是一个抽象概念，表示了一套完整的设计。</p>
+
+<p>字型（font）是具体的字型表现机制（确定了大小，字型，字型风格）。</p>
+
+<p>关于字型和字体的区别， Mark Simonson在<a href="http://www.typophile.com/node/14701#comment-84393">这个讨论</a>中作出了经典解释：</p>
+
+<blockquote>
+  <p>The physical embodiment of a collection of letters, numbers, symbols, etc. (whether it’s a case of metal pieces or a computer file) is a font. When referring to the design of the collection (the way it looks) you call it a typeface.</p>
+</blockquote>
+
+<p>由此可见，字体表示的是一个抽象概念，而字型是使这种设计得以体现的载体。用一句话来概括，就是：”字体（ font ）是你所使用的，字型 （ typeface ） 是你所看到的。”</p>
+
+<p><img src="http://imageblogemiaostein.qiniudn.com/blog_TextFont_character-glyph-typeface-font-9.png" alt="image" /></p>
+
+<h2 id="section-1">文本的布局</h2>
+
+<p>在日常工作或生活中，都会涉及大量文本，这些文本使用某些字型（font）合理（或不合理）的排列在一起，这个排列的过程，就是<code>文本的布局(text layout)</code>。当然，我们讨论的，是“合理”的排列。既然需要“合理”，那么就有必要精确知道字形在布局中所占的空间，由此我们引入了一组测量参数，用来精确衡量字形占用的空间，这些用来衡量字型空间的参数统称为<code>度量值（metrics）</code>,如下图用蓝色标示：</p>
+
+<p><img src="http://imageblogemiaostein.qiniudn.com/blog_TextFont_glyph_metrics_4.png" alt="image" />
+<img src="http://imageblogemiaostein.qiniudn.com/blog_TextFont_Letter_3.png" alt="image" /></p>
+
+<p>度量值：</p>
 
 <ul>
   <li>
-    <p>(void)p_testMethod {</p>
-
-    <p>for (int i = 0; i &lt; 10; i++) {</p>
-
-    <pre><code>  [self p_testMethod];
-  NSLog(@"this is a test");   }
-</code></pre>
+    <p><strong>边界框（Bounding rectangle）</strong> ：一个矩形区域，该区域恰好包含字型的可视部分。例如，图中‘j’ 与 ‘E’的边界框大小不相同，但都恰好包含了字母的可视部分。</p>
+  </li>
+  <li>
+    <p><strong>左右留白宽度（Left/Right-side bearing）</strong>：字型的左右各有留白值，当文字排列在一起，就会留出适当的间距。为了让字型每个字距保持稳定，整套字型的左右留白宽度，应做整体的规划，对特殊字（如 f 的右留白宽度）单独调整。</p>
+  </li>
+  <li>
+    <p><strong>步进宽度（Advance width）</strong>：边界框的宽度加上左右留白的宽度，称为步进宽度。</p>
+  </li>
+  <li>
+    <p><strong>上升部（Ascent）</strong>：从基线到上缘线的高度。</p>
+  </li>
+  <li>
+    <p><strong>下降部（Descent）</strong>：从基线到下缘线的高度。</p>
   </li>
 </ul>
 
-<p>}</p>
+<p>除度量值外，还有一些其他概念，图中黑色字体标示：</p>
 
-<p>&#8220;`</p>
+<ul>
+  <li>
+    <p><strong>原点（Origin）</strong>：文字系统根据原点，在基线上校准字形的排列。</p>
+  </li>
+  <li>
+    <p><strong>基线（Baseline）</strong>：英文字体设计中最重要的一条线，所有字型都依据基线排列。其余几条线根据基线来分布，这几条线的分布位置会大幅影响整个字体给人的印象。</p>
+  </li>
+  <li>
+    <p><strong>上缘线（Ascender line）</strong>：中间线到上缘线的部分，也就是b、d这些字母上面突出的这段，称为 ascender.</p>
+  </li>
+  <li>
+    <p><strong>下缘线（Descender line）</strong>：基准线到下缘线的部分，也就是g、p、y这些字母，超过基准线的本分，称为descender。</p>
+  </li>
+  <li>
+    <p><strong>大写线（Cap line）</strong>：大写高度的顶端。基准线到大写线之间的高度称为大写高度（Cap height）。</p>
+  </li>
+  <li>
+    <p><strong>中间线（Mean line）</strong>：a，c，m，n，x 这类小写字母的顶端线。从基准线到中间线的高度，称为x高（x-height）。</p>
+  </li>
+  <li>
+    <p><strong>x高（X-height）</strong>：从基准线到中间线的高度。</p>
+  </li>
+  <li>
+    <p><strong>大写高度（Cap height）</strong>：基准线到大写线之间的高度。</p>
+  </li>
+  <li>
+    <p><strong>行距（Leading）</strong>：字体排版过程中，两行文字之间的距离。</p>
+  </li>
+  <li>
+    <p><strong>行高（Line height）</strong>：上升部 ＋ 下降部 ＋ 行距（Leading）的高度。</p>
+  </li>
+</ul>
 
-<p>字符的表现形式集合称为字型（Glyph）。</p>
+<h2 id="section-2">字形视觉间距调整和合字</h2>
 
-<p>Any one of these various concrete forms of a <code>character</code> is called a <code>Glyph</code> .</p>
+<p>字形视觉间距调整（kerning）</p>
 
-<p>一些情况下，单个字符可由多个字体组成；另一种情况，单个字体由多个字符组成。后一种情况称为连字（Ligatures）。</p>
+<p><img src="https://developer.apple.com/library/mac/documentation/TextFonts/Conceptual/CocoaTextArchitecture/Art/kerning_2x.png" alt="image" /></p>
 
-<p>In some case a character may be represented by multiple glyphs. In other cases, a single glyph may represent multiple characters,as in the case of a <code>ligature</code>, or joined letter.</p>
+<p>合字（Ligatures）：</p>
 
-<h2 id="typefaces-fonts">字体（Typefaces）与 字型（Fonts）</h2>
+<p><img src="http://blog.justfont.com/wp-content/uploads/2012/11/latin_ligatures.png" alt="image" /></p>
 
-<h3 id="typeface">Typeface</h3>
-<p>A <code>typeface</code>(also known as font family) is a set of visually related shapes for some or all of the characters in a written language. </p>
+<h2 id="section-3">文本的对齐方式</h2>
 
-<p>from Wikipedia:
-a typeface (also known as font family) is a set of one or more fonts each composed of glyphs that share common design features. Each font of a typeface has a specific weight, style, condensation, width, slant, italicization, ornamentation, and designer or foundry (and formerly size, in metal fonts). </p>
+<p>左对齐（Left aligned）</p>
 
-<p>A <code>typestyle</code>, or simply style(also called traits), is a distinguishing visual characteristic of a typeface, such as,  such as bold, italic, condensed, expanded, narrow, small caps, poster fonts, and fixed pitch.</p>
+<p>居中对齐(Centered)</p>
 
-<h3 id="section">字体和字体簇</h3>
-<p>A <code>font</code> is a series of glyphs depicting the characters in a consistent size, typeface, and typestyle. 
-A <code>font family</code> (also known as Typeface) is a group of fonts that share a typeface but differ in typestyle. </p>
+<p>右对齐（Right aligned）</p>
 
-<h2 id="text-layout">3. Text Layout</h2>
+<p><img src="https://developer.apple.com/library/mac/documentation/TextFonts/Conceptual/CocoaTextArchitecture/Art/alignmentkinds_2x.png" alt="image" /></p>
 
-<p>Text <code>layout</code> is the process of arranging glyphs on a display device, in an area called a text view , which represents an area similar to a page in traditional typesetting. </p>
+<p>两端对齐（justified）</p>
 
-<p>The order in which glyphs are laid out relative to each other is called text <code>direction</code>. </p>
+<p><img src="https://developer.apple.com/library/mac/documentation/TextFonts/Conceptual/CocoaTextArchitecture/Art/justified_2x.png" alt="image" /></p>
 
-<p>To create lines from a string of glyphs, the layout engine must perform <code>line breaking</code> by finding a point at which to end one line and begin the next. </p>
+<h2 id="section-4">总结</h2>
 
-<p>The layout manager lays out glyphs along an invisible line called the <code>baseline</code>.</p>
+<p>本篇对文字系统中的常见概念做了介绍，对经常使用诸如CoreText,TextKit,但对字体概念相关的API不太理解的同学，有所帮助。</p>
 
-<h2 id="tips">4. Tips</h2>
+<h2 id="section-5">附录：术语速查</h2>
 
-<p>&#8220;` Text
-Characters and glyphs do not have one-to-one correspondence;</p>
+<p>以下是文中涉及的术语，供你参考：</p>
 
-<p>&#8220;`</p>
+<p>文字：</p>
+
+<p>字符（character）</p>
+
+<p>字形（glyph）</p>
+
+<p>字型（font）</p>
+
+<p>字体（typeface）</p>
+
+<p>合字（ligatures）</p>
+
+<p>字体样式（typestyle）</p>
+
+<p>字体家族（typeface family）</p>
+
+<p>字型家族（font family）</p>
+
+<p>排版：</p>
+
+<p>文本布局（text layout）</p>
+
+<p>文本布局方向（text direction）</p>
+
+<p>页边距（margins）</p>
+
+<p>行距（leading）</p>
+
+<p>换行（line breaking）</p>
+
+<p>字号（font size）</p>
+
+<p>磅值大小（point size）</p>
+
+<p>对齐方式（alignment）</p>
+
+<p>原点（origin）</p>
+
+<p>基准线（baseline）</p>
+
+<p>下源线（descenders）</p>
+
+<p>度量值（metrics）</p>
+
+<p>x高（x-height）</p>
+
+<p>中间线（mean line）</p>
+
+<p>大写字母线（cap line）</p>
+
+<p>上缘线（asence line）</p>
+
+<p>左右留白宽度（left-side bearing, right-side bearing）</p>
+
+<p>步进宽度（advance width）</p>
+
+<p>边界框（bounding box）</p>
+
+<p>字母之间平均字距（letter-spacing）</p>
+
+<p>字母之间视觉字距调整（kerning）</p>
+
+<p>文字特点：</p>
+
+<p>衬线体（serif）</p>
+
+<p>无衬线体（sans-serif）</p>
 ]]></content>
   </entry>
   
