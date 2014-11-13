@@ -4,7 +4,7 @@
   <title><![CDATA[Emiaostein‘s Blog]]></title>
   <link href="http://cszwdy.github.io/atom.xml" rel="self"/>
   <link href="http://cszwdy.github.io/"/>
-  <updated>2014-11-12T22:49:46+08:00</updated>
+  <updated>2014-11-13T11:55:14+08:00</updated>
   <id>http://cszwdy.github.io/</id>
   <author>
     <name><![CDATA[Emiaostein]]></name>
@@ -12,6 +12,20 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iOS开发自用第三方库(持续更新)]]></title>
+    <link href="http://cszwdy.github.io/blog/2014/11/13/ioskai-fa-zi-yong-di-san-fang-ku-chi-xu-geng-xin/"/>
+    <updated>2014-11-13T11:45:05+08:00</updated>
+    <id>http://cszwdy.github.io/blog/2014/11/13/ioskai-fa-zi-yong-di-san-fang-ku-chi-xu-geng-xin</id>
+    <content type="html"><![CDATA[<p><img src="http://imageblogemiaostein.qiniudn.com/blog_cocopods_Cover.png" alt="COVER" /></p>
+
+<p>个人在开发中经常使用到的第三方库，持续更新。</p>
+
+<p><a href="https://www.zybuluo.com/Emiaostein/note/45755">点击查看 －&gt;</a></p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[排版设计的基础知识（一）]]></title>

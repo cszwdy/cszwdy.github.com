@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Ios, | Emiaostein‘s Blog]]></title>
-  <link href="http://cszwdy.github.io/blog/categories/ios/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Cocoapods | Emiaostein‘s Blog]]></title>
+  <link href="http://cszwdy.github.io/blog/categories/cocoapods/atom.xml" rel="self"/>
   <link href="http://cszwdy.github.io/"/>
   <updated>2014-11-13T11:55:14+08:00</updated>
   <id>http://cszwdy.github.io/</id>
